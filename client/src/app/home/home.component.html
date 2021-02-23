@@ -1,0 +1,65 @@
+<h2 class="text-center text-primary">Välkommen!</h2>
+<hr>
+
+<div class=" d-flex justify-content-center mb-3">
+  <strong>Här får du hjälp att välja rätt längd på dina längdskidor. Fyll i formuläret nedan för att få en rekommendation!</strong>
+</div>
+
+<div class="d-flex justify-content-center mb-3">
+  <form [formGroup]="skierForm" (ngSubmit)="submitSkierForm()">
+
+    <div class="form-group">
+      <label class="control-label" style="margin-right: 10px">Vilken är din ålder?</label>
+      <input type="text" class="form-control text-center " formControlName="age" required placeholder="Ålder">
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" style="margin-right: 10px">Vilken är din kroppslängd? Ange antal hela cm:</label>
+      <input type="text" class="form-control text-center" formControlName="height" required placeholder="Kroppslängd">
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" style="margin-right: 10px">Välj klassisk stil eller fristil:</label>
+      <label class="radio-inline">
+        <input class="mr-1" type="radio" value="classic" formControlName="discipline" />Klassisk
+      </label>
+      <label class="radio-inline ml-3">
+        <input class="mr-1" type="radio" value="freestyle" formControlName="discipline" />Fristil
+      </label>
+    </div>
+
+    <div class="form-group text-center">
+      <button [disabled]="!skierForm.valid" class="btn btn-success" type="submit">Skicka</button>
+    </div>
+
+  </form>
+
+</div>
+
+<div *ngIf="recommendationToggle" class="container justify-content-center mb-3">
+  <div class="col-lg-4 mx-auto">
+    <div class="row">
+      <p class="text-center">
+        <strong>För dig rekommenderars skidor:</strong>
+      </p>
+    </div>
+    <div class="row">
+      <div *ngIf="skier.variableLength">
+        <p>Som är som mest {{skier.skiMaxLengthRec}} cm långa</p>
+        <p>Som är minst {{skier.skiMinLengthRec}} cm långa</p>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="!skier.variableLength">
+        <p>Som är {{skier.skiMaxLengthRec}} cm långa</p>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="skier.discipline === 'freestyle'">
+        <p>Kom ihåg att den kortaste skidlängd du får tävla med i fristil är {{skier.freestyleCompetitionMinLength}} cm!</p>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
